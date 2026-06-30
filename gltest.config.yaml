@@ -1,0 +1,27 @@
+# gltest network configuration.
+#
+# Select a network at runtime with:  gltest tests/integration/ -v -s --network localnet
+# Private keys are read from environment variables (see .env.example). Never commit
+# real private keys.
+
+networks:
+  default: localnet
+
+  localnet:
+    url: http://localhost:4000/api
+    # Localnet ships funded dev accounts. To use your own, uncomment:
+    # accounts:
+    #   - "${ACCOUNT_PRIVATE_KEY_1}"
+    #   - "${ACCOUNT_PRIVATE_KEY_2}"
+
+  studionet:
+    url: https://studio.genlayer.com/api
+    accounts:
+      - "${ACCOUNT_PRIVATE_KEY_1}"
+      - "${ACCOUNT_PRIVATE_KEY_2}"
+
+  testnet_bradbury:
+    url: https://rpc-bradbury.genlayer.com
+    accounts:
+      - "${ACCOUNT_PRIVATE_KEY_1}"
+      - "${ACCOUNT_PRIVATE_KEY_2}"

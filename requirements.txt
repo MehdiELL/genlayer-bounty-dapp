@@ -1,0 +1,11 @@
+# GenLayer contract tooling (Python 3.12+).
+#   pip install -r requirements.txt
+#
+# genlayer-test  -> direct-mode + integration test framework (gltest, pytest plugin)
+# genvm-linter   -> static analysis for contract safety/correctness (genvm-lint)
+#
+# For the lightweight local simulator (GLSim), install the extra instead:
+#   pip install "genlayer-test[sim]"
+
+genlayer-test
+genvm-linter
