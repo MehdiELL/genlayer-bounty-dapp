@@ -9,7 +9,7 @@
 
 import { createClient } from "genlayer-js";
 import { testnetBradbury } from "genlayer-js/chains";
-import { TransactionStatus } from "genlayer-js/types";
+import { TransactionStatus, type CalldataEncodable } from "genlayer-js/types";
 import type { BountyInfo, Submission, Hex } from "./types";
 import * as demo from "./demo";
 
@@ -41,7 +41,7 @@ function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function read(functionName: string, args: unknown[] = [], retries = 3): Promise<unknown> {
+async function read(functionName: string, args: CalldataEncodable[] = [], retries = 3): Promise<unknown> {
   try {
     return await readClient().readContract({ address: CONTRACT_ADDRESS, functionName, args });
   } catch (e) {
@@ -57,17 +57,17 @@ async function read(functionName: string, args: unknown[] = [], retries = 3): Pr
 async function write(
   account: Hex,
   functionName: string,
-  args: unknown[] = [],
+  args: CalldataEncodable[] = [],
   value: bigint = 0n,
-): Promise<Hex> {
+) {
   const client = writeClient(account);
   await client.connect("testnetBradbury"); // ensure correct chain before signing
-  const hash = (await client.writeContract({
+  const hash = await client.writeContract({
     address: CONTRACT_ADDRESS,
     functionName,
     args,
     value,
-  })) as Hex;
+  });
   await client.waitForTransactionReceipt({ hash, status: TransactionStatus.ACCEPTED });
   return hash;
 }
